@@ -1,0 +1,55 @@
+USE workshop;
+
+CREATE TABLE clientes (
+    cliente_id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100),
+    PRIMARY KEY (cliente_id)
+);
+
+ALTER TABLE clientes ADD COLUMN telefone VARCHAR(20);
+
+INSERT INTO clientes (nome, email, telefone) 
+VALUES 
+('Vitor Souza', 'vitor@email.com', '83999991111'),
+('Pedro Alves', 'pedro@email.com', '83999992222'),
+('Maria Silva', 'maria@email.com', '83999993333'),
+('Ana Oliveira', 'ana@email.com', '83999994444');
+
+UPDATE clientes 
+SET telefone = '83988880000' 
+WHERE cliente_id = 2;
+
+DELETE FROM clientes 
+WHERE cliente_id = 4;
+
+SELECT * FROM clientes;
+
+SELECT * FROM clientes 
+WHERE nome LIKE '%Souza%';
+
+SELECT * FROM clientes 
+WHERE cliente_id BETWEEN 1 AND 3;
+
+SELECT * FROM clientes 
+WHERE nome IN ('Vitor Souza', 'Maria Silva');
+
+SELECT COUNT(*) AS total_clientes FROM clientes;
+
+SELECT MAX(cliente_id) AS ultimo_id FROM clientes;
+
+SELECT MIN(cliente_id) AS primeiro_id FROM clientes;
+
+ALTER TABLE clientes ADD COLUMN cidade VARCHAR(50);
+
+UPDATE clientes SET cidade = 'João Pessoa' WHERE cliente_id IN (1, 2);
+UPDATE clientes SET cidade = 'Campina Grande' WHERE cliente_id = 3;
+
+SELECT cidade, COUNT(*) AS quantidade 
+FROM clientes 
+GROUP BY cidade;
+
+SELECT cidade, COUNT(*) AS quantidade 
+FROM clientes 
+GROUP BY cidade 
+HAVING COUNT(*) > 1;

@@ -1,0 +1,46 @@
+CREATE SCHEMA DESAFIO;
+
+USE DESAFIO;
+
+CREATE TABLE autores (
+    autor_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    nacionalidade VARCHAR(50) DEFAULT 'Brasileiro',
+    idade INT
+);
+
+CREATE TABLE livros (
+    livro_id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(150) NOT NULL,
+    preco DECIMAL(10,2),
+    genero VARCHAR(50),
+    autor_id INT,
+    FOREIGN KEY (autor_id) REFERENCES autores(autor_id)
+);
+
+INSERT INTO autores (nome, idade) VALUES 
+('Ariano Suassuna', 87), ('Machado de Assis', 69), ('Clarice Lispector', 56), 
+('Jorge Amado', 88), ('Guimarães Rosa', 59), ('Graciliano Ramos', 60), 
+('Cecília Meireles', 62), ('Carlos Drummond', 84), ('Lygia Fagundes', 98), ('Érico Veríssimo', 70);
+
+INSERT INTO livros (titulo, preco, genero, autor_id) VALUES 
+('O Auto da Compadecida', 45.00, 'Teatro', 1), ('Dom Casmurro', 32.50, 'Romance', 2),
+('A Hora da Estrela', 28.00, 'Romance', 3), ('Capitães da Areia', 40.00, 'Ficção', 4),
+('Grande Sertão: Veredas', 55.00, 'Épico', 5), ('Vidas Secas', 35.00, 'Regionalismo', 6),
+('Ou Isto ou Aquilo', 25.00, 'Poesia', 7), ('Sentimento do Mundo', 30.00, 'Poesia', 8),
+('As Meninas', 42.00, 'Ficção', 9), ('O Tempo e o Vento', 60.00, 'Histórico', 10);
+
+UPDATE livros SET preco = 50.00 WHERE livro_id = 1;
+
+SELECT * FROM livros WHERE preco > 40;
+
+SELECT COUNT(*) AS total_livros FROM livros;
+SELECT AVG(preco) AS preco_medio FROM livros;
+SELECT MAX(preco) AS livro_mais_caro FROM livros;
+
+SELECT genero, COUNT(*) FROM livros GROUP BY genero;
+SELECT genero, AVG(preco) FROM livros GROUP BY genero HAVING AVG(preco) > 30;
+
+SELECT livros.titulo, autores.nome 
+FROM livros 
+INNER JOIN autores ON livros.autor_id = autores.autor_id;
