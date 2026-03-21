@@ -1,0 +1,284 @@
+ANÁLISE DAS CONSULTAS - SISTEMA VELOZCAR
+
+Este documento apresenta a interpretação das consultas realizadas no banco de dados da concessionária VelozCar, com foco nos resultados obtidos e nos insights que podem apoiar a tomada de decisão no sistema.
+
+1. CONSULTAS DA TABELA CLIENTE
+
+Consulta 1:
+SELECT YEAR(data_cadastro) AS ano, COUNT(*) AS total_clientes
+FROM cliente
+GROUP BY YEAR(data_cadastro);
+
+O que a consulta mostrou:
+A consulta exibe a quantidade de clientes cadastrados por ano.
+
+Insight prático:
+Essa informação permite acompanhar o crescimento da base de clientes ao longo do tempo. Com isso, a concessionária pode avaliar se houve aumento na procura pelos serviços e identificar períodos de maior expansão.
+
+Consulta 2:
+SELECT endereco, COUNT(*) AS total
+FROM cliente
+GROUP BY endereco;
+
+O que a consulta mostrou:
+A consulta apresenta quantos clientes estão registrados em cada endereço.
+
+Insight prático:
+Essa análise ajuda a identificar a distribuição dos clientes. Mesmo sendo uma base fictícia, em um cenário real isso poderia indicar regiões com maior concentração de público e auxiliar em estratégias de marketing ou abertura de novas unidades.
+
+2. CONSULTAS DA TABELA FUNCIONARIO
+
+Consulta 1:
+SELECT cargo, COUNT(*) AS total_funcionarios
+FROM funcionario
+GROUP BY cargo;
+
+O que a consulta mostrou:
+A consulta informa a quantidade de funcionários por cargo.
+
+Insight prático:
+Esse resultado ajuda a visualizar como a equipe está distribuída entre atendimento, gerência, financeiro e mecânica. Isso contribui para avaliar se existe equilíbrio entre os setores da empresa.
+
+Consulta 2:
+SELECT cargo, AVG(salario) AS media_salarial
+FROM funcionario
+GROUP BY cargo;
+
+O que a consulta mostrou:
+A consulta calcula a média salarial por cargo.
+
+Insight prático:
+Permite comparar a remuneração entre áreas e verificar a coerência da estrutura salarial. Esse tipo de informação pode apoiar revisões de cargos, promoções e planejamento financeiro da empresa.
+
+3. CONSULTAS DA TABELA CATEGORIA_VEICULO
+
+Consulta 1:
+SELECT tipo_combustivel, COUNT(*) AS total
+FROM categoria_veiculo
+GROUP BY tipo_combustivel;
+
+O que a consulta mostrou:
+A consulta apresenta a quantidade de categorias por tipo de combustível.
+
+Insight prático:
+Ajuda a entender se a locadora está mais voltada para veículos flex, diesel, gasolina ou elétricos. Isso pode orientar futuras aquisições de veículos e análise de tendências de mercado.
+
+Consulta 2:
+SELECT status_categoria, AVG(valor_caucao) AS media_caucao
+FROM categoria_veiculo
+GROUP BY status_categoria;
+
+O que a consulta mostrou:
+A consulta mostra a média do valor de caução por status da categoria.
+
+Insight prático:
+Permite analisar se as categorias ativas estão com valores de caução coerentes com o perfil dos veículos cadastrados. Isso pode ser útil na definição de políticas de segurança financeira da empresa.
+
+4. CONSULTAS DA TABELA VEICULO
+
+Consulta 1:
+SELECT status, COUNT(*) AS total_veiculos
+FROM veiculo
+GROUP BY status;
+
+O que a consulta mostrou:
+A consulta exibe quantos veículos estão disponíveis, alugados ou em manutenção.
+
+Insight prático:
+Essa é uma das informações mais importantes para a gestão da locadora, pois mostra a situação atual da frota. Com isso, é possível acompanhar a disponibilidade real dos veículos e agir rapidamente em caso de baixa oferta.
+
+Consulta 2:
+SELECT marca, AVG(valor_diaria) AS media_diaria
+FROM veiculo
+GROUP BY marca;
+
+O que a consulta mostrou:
+A consulta informa a média do valor da diária por marca.
+
+Insight prático:
+Ajuda a comparar o posicionamento de preço entre as marcas e pode auxiliar na definição de estratégias comerciais, promoções e formação de preços.
+
+5. CONSULTAS DA TABELA ALUGUEL
+
+Consulta 1:
+SELECT status, COUNT(*) AS total_alugueis
+FROM aluguel
+GROUP BY status;
+
+O que a consulta mostrou:
+A consulta apresenta a quantidade de aluguéis em cada status, como ativo, finalizado e atrasado.
+
+Insight prático:
+Permite acompanhar a situação geral dos contratos. Isso ajuda a empresa a monitorar aluguéis em andamento e identificar atrasos que podem exigir contato com o cliente ou cobrança adicional.
+
+Consulta 2:
+SELECT id_funcionario, SUM(valor_total) AS total_movimentado
+FROM aluguel
+GROUP BY id_funcionario;
+
+O que a consulta mostrou:
+A consulta informa o valor total movimentado por cada funcionário nos contratos registrados.
+
+Insight prático:
+Essa análise pode ser usada para acompanhar desempenho operacional, identificar funcionários com maior volume de contratos e apoiar avaliações internas da equipe.
+
+6. CONSULTAS DA TABELA PAGAMENTO
+
+Consulta 1:
+SELECT status, COUNT(*) AS total_pagamentos
+FROM pagamento
+GROUP BY status;
+
+O que a consulta mostrou:
+A consulta mostra quantos pagamentos estão pendentes, concluídos ou cancelados.
+
+Insight prático:
+É essencial para o controle financeiro, pois ajuda a empresa a acompanhar inadimplência, pagamentos recebidos e valores que ainda precisam ser regularizados.
+
+Consulta 2:
+SELECT metodo, SUM(valor_pagamento) AS total_recebido
+FROM pagamento
+GROUP BY metodo;
+
+O que a consulta mostrou:
+A consulta exibe o total recebido por método de pagamento, como pix, cartão ou boleto.
+
+Insight prático:
+Permite identificar quais formas de pagamento são mais utilizadas pelos clientes. Essa informação é útil para decisões sobre priorização de meios de pagamento e negociações com operadoras.
+
+7. CONSULTAS DA TABELA MANUTENCAO
+
+Consulta 1:
+SELECT tipo_manutencao, COUNT(*) AS total
+FROM manutencao
+GROUP BY tipo_manutencao;
+
+O que a consulta mostrou:
+A consulta apresenta a quantidade de manutenções por tipo, como preventiva, corretiva ou estética.
+
+Insight prático:
+Ajuda a entender o perfil das intervenções realizadas na frota. Se houver muitas manutenções corretivas, isso pode indicar necessidade de reforçar a manutenção preventiva.
+
+Consulta 2:
+SELECT status, SUM(custo) AS custo_total
+FROM manutencao
+GROUP BY status;
+
+O que a consulta mostrou:
+A consulta informa o custo total das manutenções agrupadas por status.
+
+Insight prático:
+Permite avaliar quanto a empresa está gastando com serviços concluídos ou ainda em andamento, o que é importante para controle de custos e planejamento da manutenção da frota.
+
+8. CONSULTAS DA TABELA SEGURO
+
+Consulta 1:
+SELECT tipo_plano, COUNT(*) AS total
+FROM seguro
+GROUP BY tipo_plano;
+
+O que a consulta mostrou:
+A consulta apresenta quantos seguros existem por tipo de plano.
+
+Insight prático:
+Ajuda a empresa a visualizar a variedade de planos oferecidos e entender quais categorias de proteção estão disponíveis para os clientes.
+
+Consulta 2:
+SELECT seguradora, AVG(valor_seguro) AS media_valor
+FROM seguro
+GROUP BY seguradora;
+
+O que a consulta mostrou:
+A consulta informa a média do valor dos seguros por seguradora.
+
+Insight prático:
+Esse resultado permite comparar custos entre seguradoras, o que pode apoiar futuras parcerias e renegociações contratuais.
+
+9. CONSULTAS DA TABELA ALUGUEL_SEGURO
+
+Consulta 1:
+SELECT status, COUNT(*) AS total
+FROM aluguel_seguro
+GROUP BY status;
+
+O que a consulta mostrou:
+A consulta exibe a quantidade de registros de aluguel com seguro por status.
+
+Insight prático:
+Permite acompanhar quantos seguros associados aos aluguéis estão ativos ou em outras situações, facilitando o controle dessa proteção adicional.
+
+Consulta 2:
+SELECT tipo_cobranca, SUM(valor_cobrado) AS total_cobrado
+FROM aluguel_seguro
+GROUP BY tipo_cobranca;
+
+O que a consulta mostrou:
+A consulta mostra o valor total cobrado por tipo de cobrança do seguro.
+
+Insight prático:
+Essa análise ajuda a entender como os seguros estão sendo cobrados e qual o impacto financeiro dessa cobrança na operação.
+
+10. CONSULTAS COM JOIN
+
+Consulta 1:
+SELECT a.id_aluguel, c.nome AS cliente, v.modelo AS veiculo, a.status, a.valor_total
+FROM aluguel a
+INNER JOIN cliente c ON a.id_cliente = c.id_cliente
+INNER JOIN veiculo v ON a.id_veiculo = v.id_veiculo;
+
+O que a consulta mostrou:
+A consulta relaciona aluguel, cliente e veículo, mostrando quem alugou qual veículo, o status do aluguel e o valor total.
+
+Insight prático:
+Essa consulta é útil para relatórios operacionais, pois apresenta de forma integrada os principais dados de cada contrato.
+
+Consulta 2:
+SELECT p.id_pagamento, c.nome AS cliente, p.valor_pagamento, p.metodo, p.status
+FROM pagamento p
+INNER JOIN aluguel a ON p.id_aluguel = a.id_aluguel
+INNER JOIN cliente c ON a.id_cliente = c.id_cliente;
+
+O que a consulta mostrou:
+A consulta relaciona pagamentos aos clientes, permitindo visualizar quem pagou, quanto pagou, o método utilizado e a situação do pagamento.
+
+Insight prático:
+Ajuda no controle financeiro e no acompanhamento individual dos pagamentos de cada cliente.
+
+Consulta 3:
+SELECT m.id_manutencao, v.modelo AS veiculo, f.nome AS funcionario, m.tipo_manutencao, m.custo
+FROM manutencao m
+INNER JOIN veiculo v ON m.id_veiculo = v.id_veiculo
+INNER JOIN funcionario f ON m.id_funcionario = f.id_funcionario;
+
+O que a consulta mostrou:
+A consulta relaciona manutenções aos veículos e funcionários responsáveis.
+
+Insight prático:
+Esse resultado facilita o acompanhamento dos serviços realizados, dos custos envolvidos e da responsabilidade de cada funcionário no processo.
+
+Consulta 4:
+SELECT v.modelo, cat.nome_categoria, v.status, v.valor_diaria
+FROM veiculo v
+INNER JOIN categoria_veiculo cat ON v.id_categoria = cat.id_categoria;
+
+O que a consulta mostrou:
+A consulta relaciona veículos às suas categorias, exibindo modelo, categoria, status e valor da diária.
+
+Insight prático:
+Ajuda a visualizar melhor a composição da frota e o posicionamento de preço por categoria.
+
+Consulta 5:
+SELECT a.id_aluguel, s.nome_seguro, alseg.valor_cobrado
+FROM aluguel_seguro alseg
+INNER JOIN aluguel a ON alseg.id_aluguel = a.id_aluguel
+INNER JOIN seguro s ON alseg.id_seguro = s.id_seguro;
+
+O que a consulta mostrou:
+A consulta relaciona os aluguéis aos seguros contratados, mostrando o valor cobrado em cada caso.
+
+Insight prático:
+Permite analisar quais contratos possuem seguro e quanto esse serviço adicional representa financeiramente.
+
+CONCLUSÃO
+
+As consultas desenvolvidas permitem extrair informações relevantes sobre clientes, funcionários, veículos, aluguéis, pagamentos, manutenções e seguros. Esses dados ajudam a concessionária VelozCar a acompanhar a operação, controlar custos, verificar a disponibilidade da frota, monitorar pagamentos pendentes e apoiar decisões mais estratégicas. Dessa forma, o banco de dados não apenas armazena informações, mas também serve como base para análise e melhoria dos processos da empresa.
